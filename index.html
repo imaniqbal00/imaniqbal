@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Iman Iqbal — Software & Data</title>
+<meta name="description" content="Iman Iqbal — Computer Science student at GCU Lahore. Building software, exploring AI, and turning data into decisions." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Hanken+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f3ecdf;
+    --bg-2:#ece2cf;
+    --cream:#faf6ee;
+    --ink:#1b1611;
+    --ink-soft:#5d5345;
+    --line:#d7c9b0;
+    --accent:#cf4a26;
+    --accent-deep:#a93817;
+    --teal:#1f5d54;
+    --maxw:1180px;
+    --ease:cubic-bezier(.19,1,.22,1);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Hanken Grotesk",system-ui,sans-serif;
+    font-size:18px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--accent);color:var(--cream)}
+
+  /* paper grain */
+  .grain{
+    position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
+    mix-blend-mode:multiply;
+  }
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;position:relative;z-index:2}
+  a{color:inherit;text-decoration:none}
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    transition:background .4s var(--ease),border-color .4s var(--ease),padding .4s var(--ease);
+    border-bottom:1px solid transparent;
+  }
+  header.nav.solid{
+    background:rgba(243,236,223,.82);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:22px 28px;max-width:var(--maxw);margin:0 auto}
+  .brand{font-family:"Fraunces",serif;font-weight:500;font-size:1.32rem;letter-spacing:-.01em;display:flex;align-items:center;gap:.5ch}
+  .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);display:inline-block}
+  .nav-links{display:flex;align-items:center;gap:34px}
+  .nav-links a{
+    font-family:"JetBrains Mono",monospace;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-soft);position:relative;padding:4px 0;transition:color .25s;
+  }
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:1.5px;background:var(--accent);transition:width .35s var(--ease)}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-links a:hover::after,.nav-links a.active::after{width:100%}
+  .nav-links a.active{color:var(--ink)}
+  .avail{display:inline-flex;align-items:center;gap:8px;font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.08em;color:var(--ink-soft)}
+  .pulse{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 0 rgba(31,93,84,.5);animation:pulse 2.4s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(31,93,84,.5)}70%{box-shadow:0 0 0 9px rgba(31,93,84,0)}100%{box-shadow:0 0 0 0 rgba(31,93,84,0)}}
+  .burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px}
+  .burger span{width:24px;height:2px;background:var(--ink);transition:.3s var(--ease)}
+  .mobile-menu{display:none}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:172px 0 90px;position:relative}
+  .hero .blob{
+    position:absolute;top:-40px;right:-120px;width:520px;height:520px;border-radius:50%;
+    background:radial-gradient(circle at 30% 30%,rgba(207,74,38,.20),rgba(207,74,38,0) 62%);
+    filter:blur(10px);z-index:-1;
+  }
+  .kicker{font-family:"JetBrains Mono",monospace;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:14px;margin-bottom:30px}
+  .kicker .rule{height:1px;width:46px;background:var(--accent);display:inline-block;opacity:.6}
+  h1.title{
+    font-family:"Fraunces",serif;font-weight:400;font-optical-sizing:auto;
+    font-size:clamp(2.7rem,7vw,5.6rem);line-height:1.02;letter-spacing:-.02em;max-width:14ch;
+  }
+  h1.title em{font-style:italic;color:var(--accent)}
+  .lead{margin-top:34px;max-width:54ch;font-size:1.18rem;color:var(--ink-soft);line-height:1.65}
+  .cta-row{margin-top:44px;display:flex;flex-wrap:wrap;align-items:center;gap:18px}
+  .btn{
+    font-family:"JetBrains Mono",monospace;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;
+    padding:15px 26px;border-radius:50px;display:inline-flex;align-items:center;gap:10px;transition:.3s var(--ease);border:1px solid var(--ink);
+  }
+  .btn.primary{background:var(--ink);color:var(--cream)}
+  .btn.primary:hover{background:var(--accent);border-color:var(--accent);transform:translateY(-3px)}
+  .btn.ghost{background:transparent;color:var(--ink)}
+  .btn.ghost:hover{background:var(--ink);color:var(--cream);transform:translateY(-3px)}
+  .btn .arr{transition:transform .3s var(--ease)}
+  .btn:hover .arr{transform:translate(3px,-3px)}
+  .socials{margin-top:46px;display:flex;gap:26px}
+  .socials a{font-family:"JetBrains Mono",monospace;font-size:.78rem;letter-spacing:.06em;color:var(--ink-soft);position:relative;transition:color .25s}
+  .socials a::after{content:"↗";margin-left:5px;font-size:.7rem;opacity:.5}
+  .socials a:hover{color:var(--accent)}
+
+  /* ---------- MARQUEE ---------- */
+  .marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:20px 0;background:var(--bg-2)}
+  .marquee-track{display:flex;gap:0;white-space:nowrap;width:max-content;animation:scroll 32s linear infinite}
+  .marquee:hover .marquee-track{animation-play-state:paused}
+  .marquee-track span{font-family:"Fraunces",serif;font-size:1.7rem;font-style:italic;color:var(--ink);padding:0 30px;display:inline-flex;align-items:center;gap:30px}
+  .marquee-track span::after{content:"✦";color:var(--accent);font-style:normal;font-size:1rem}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:104px 0}
+  .sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:54px}
+  .sec-num{font-family:"JetBrains Mono",monospace;font-size:.82rem;color:var(--accent);letter-spacing:.1em}
+  .sec-title{font-family:"Fraunces",serif;font-weight:400;font-size:clamp(2rem,4.4vw,3rem);letter-spacing:-.01em}
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:64px;align-items:start}
+  .about-grid p{font-size:1.22rem;line-height:1.7;color:var(--ink)}
+  .about-grid p + p{margin-top:22px;color:var(--ink-soft);font-size:1.1rem}
+  .panel{border:1px solid var(--line);border-radius:16px;padding:30px;background:var(--cream)}
+  .panel h4{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+  .panel .grp + .grp{margin-top:24px;padding-top:24px;border-top:1px solid var(--line)}
+  .panel .v{font-size:1rem;color:var(--ink);line-height:1.55}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .chip{font-family:"JetBrains Mono",monospace;font-size:.72rem;padding:5px 11px;border:1px solid var(--line);border-radius:50px;color:var(--ink-soft)}
+
+  /* ---------- SKILLS ---------- */
+  .skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .skill-cell{background:var(--bg);padding:34px;transition:background .35s var(--ease)}
+  .skill-cell:hover{background:var(--cream)}
+  .skill-cell .idx{font-family:"JetBrains Mono",monospace;font-size:.74rem;color:var(--accent);letter-spacing:.1em}
+  .skill-cell h3{font-family:"Fraunces",serif;font-weight:400;font-size:1.55rem;margin:10px 0 18px}
+  .skill-list{display:flex;flex-wrap:wrap;gap:9px}
+  .skill-list span{font-size:.94rem;color:var(--ink-soft);font-family:"JetBrains Mono",monospace;font-size:.8rem;padding:6px 12px;background:var(--bg-2);border-radius:8px;transition:.25s var(--ease)}
+  .skill-cell:hover .skill-list span{background:var(--bg)}
+  .soft{margin-top:30px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  .soft .lbl{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+  .soft .s{font-family:"Fraunces",serif;font-style:italic;font-size:1.2rem;color:var(--ink-soft)}
+  .soft .s:not(:last-child)::after{content:" /";color:var(--line);font-style:normal}
+
+  /* ---------- WORK ---------- */
+  .work-list{border-top:1px solid var(--line)}
+  .work-item{
+    display:grid;grid-template-columns:54px 1fr auto;gap:28px;align-items:center;
+    padding:34px 14px;border-bottom:1px solid var(--line);position:relative;cursor:pointer;
+    transition:padding .4s var(--ease),background .4s var(--ease);overflow:hidden;
+  }
+  .work-item::before{content:"";position:absolute;inset:0;background:var(--ink);transform:translateY(101%);transition:transform .5s var(--ease);z-index:0}
+  .work-item:hover{padding-left:30px;padding-right:24px}
+  .work-item:hover::before{transform:translateY(0)}
+  .work-item > *{position:relative;z-index:1;transition:color .4s var(--ease)}
+  .work-item:hover .w-num,.work-item:hover .w-title,.work-item:hover .w-desc,.work-item:hover .w-tags span,.work-item:hover .w-go{color:var(--cream)}
+  .work-item:hover .w-tags span{border-color:rgba(250,246,238,.35)}
+  .work-item:hover .w-go{transform:translate(4px,-4px)}
+  .w-num{font-family:"JetBrains Mono",monospace;font-size:.86rem;color:var(--accent)}
+  .w-title{font-family:"Fraunces",serif;font-weight:400;font-size:clamp(1.5rem,3vw,2.1rem);letter-spacing:-.01em;line-height:1.1}
+  .w-desc{margin-top:8px;font-size:1rem;color:var(--ink-soft);max-width:62ch;line-height:1.55}
+  .w-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .w-tags span{font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.04em;padding:4px 10px;border:1px solid var(--line);border-radius:50px;color:var(--ink-soft)}
+  .w-go{font-size:1.6rem;color:var(--ink);transition:color .4s var(--ease),transform .4s var(--ease);justify-self:end}
+
+  /* ---------- EDUCATION ---------- */
+  .timeline{position:relative;border-left:2px solid var(--line);margin-left:8px}
+  .t-item{position:relative;padding:0 0 44px 38px}
+  .t-item:last-child{padding-bottom:0}
+  .t-item::before{content:"";position:absolute;left:-9px;top:6px;width:16px;height:16px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+  .t-item.exp::before{background:var(--accent)}
+  .t-date{font-family:"JetBrains Mono",monospace;font-size:.76rem;letter-spacing:.08em;color:var(--accent);text-transform:uppercase}
+  .t-title{font-family:"Fraunces",serif;font-weight:400;font-size:1.5rem;margin:6px 0 3px;letter-spacing:-.01em}
+  .t-place{color:var(--ink-soft);font-size:1.02rem}
+  .t-meta{font-size:.92rem;color:var(--ink-soft);margin-top:5px}
+  .t-grade{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:.72rem;padding:3px 10px;background:var(--bg-2);border-radius:50px;color:var(--teal);margin-top:8px}
+
+  /* ---------- CONTACT ---------- */
+  #contact{padding-bottom:60px}
+  .contact-big{font-family:"Fraunces",serif;font-weight:400;font-size:clamp(2.6rem,8vw,6rem);line-height:1.02;letter-spacing:-.02em}
+  .contact-big em{font-style:italic;color:var(--accent)}
+  .contact-sub{margin-top:26px;max-width:48ch;font-size:1.16rem;color:var(--ink-soft)}
+  .mail-link{display:inline-flex;align-items:center;gap:14px;margin-top:38px;font-family:"Fraunces",serif;font-size:clamp(1.3rem,3.2vw,2rem);border-bottom:2px solid var(--line);padding-bottom:8px;transition:.3s var(--ease)}
+  .mail-link:hover{border-color:var(--accent);color:var(--accent);gap:20px}
+  .contact-socials{margin-top:48px;display:flex;flex-wrap:wrap;gap:14px}
+  .contact-socials a{font-family:"JetBrains Mono",monospace;font-size:.8rem;letter-spacing:.04em;padding:12px 20px;border:1px solid var(--ink);border-radius:50px;transition:.3s var(--ease)}
+  .contact-socials a:hover{background:var(--ink);color:var(--cream);transform:translateY(-3px)}
+
+  /* ---------- FOOTER ---------- */
+  footer{border-top:1px solid var(--line);padding:36px 0;background:var(--bg-2)}
+  .foot-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+  .foot-inner p{font-family:"JetBrains Mono",monospace;font-size:.74rem;letter-spacing:.05em;color:var(--ink-soft)}
+  .to-top{font-family:"JetBrains Mono",monospace;font-size:.74rem;color:var(--ink-soft);transition:color .25s}
+  .to-top:hover{color:var(--accent)}
+
+  /* ---------- REVEAL ---------- */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+  .hero .kicker,.hero h1.title,.hero .lead,.hero .cta-row,.hero .socials{opacity:0;transform:translateY(24px);animation:rise .95s var(--ease) forwards}
+  .hero .kicker{animation-delay:.05s}
+  .hero h1.title{animation-delay:.18s}
+  .hero .lead{animation-delay:.34s}
+  .hero .cta-row{animation-delay:.48s}
+  .hero .socials{animation-delay:.6s}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .reveal{opacity:1;transform:none}
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:860px){
+    .about-grid{grid-template-columns:1fr;gap:40px}
+    .skills-grid{grid-template-columns:1fr}
+    .nav-links,.avail{display:none}
+    .burger{display:flex}
+    .mobile-menu{
+      display:block;position:fixed;inset:0;z-index:45;background:var(--bg);
+      transform:translateY(-100%);transition:transform .5s var(--ease);
+      padding:120px 28px 40px;
+    }
+    .mobile-menu.open{transform:translateY(0)}
+    .mobile-menu a{display:block;font-family:"Fraunces",serif;font-size:2.4rem;padding:14px 0;border-bottom:1px solid var(--line)}
+    .mobile-menu a:last-child{border:none}
+    body.menu-open{overflow:hidden}
+    .burger.x span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+    .burger.x span:nth-child(2){opacity:0}
+    .burger.x span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  }
+  @media(max-width:560px){
+    body{font-size:17px}
+    .hero{padding:140px 0 70px}
+    section{padding:78px 0}
+    .work-item{grid-template-columns:36px 1fr;gap:16px}
+    .w-go{display:none}
+    .wrap{padding:0 20px}
+    .nav-inner{padding:18px 20px}
+  }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand"><span class="dot"></span>Iman Iqbal</a>
+    <nav class="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#work">Work</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <span class="avail"><span class="pulse"></span>Open to internships</span>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about">About</a>
+  <a href="#skills">Skills</a>
+  <a href="#work">Work</a>
+  <a href="#education">Education</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="blob"></div>
+    <div class="wrap">
+      <div class="kicker"><span class="rule"></span>Iman Iqbal · Lahore, Pakistan</div>
+      <h1 class="title">Building software, exploring AI, turning <em>data</em> into decisions.</h1>
+      <p class="lead">I'm a Computer Science student at Government College University, Lahore, drawn to clean code, thoughtful interfaces, and the stories hidden inside data. I learn fast, build constantly, and I'm looking for a team where I can do both.</p>
+      <div class="cta-row">
+        <a href="#work" class="btn primary">View my work <span class="arr">↗</span></a>
+        <a href="#contact" class="btn ghost">Get in touch <span class="arr">↗</span></a>
+      </div>
+      <div class="socials">
+        <a href="https://github.com/iman-iqbal" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/iman-iqbal" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:iman.iqbal12204@gmail.com">Email</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>C++</span><span>Python</span><span>SQL</span><span>Data Structures</span><span>Web Development</span><span>Artificial Intelligence</span><span>Problem Solving</span>
+      <span>C++</span><span>Python</span><span>SQL</span><span>Data Structures</span><span>Web Development</span><span>Artificial Intelligence</span><span>Problem Solving</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="sec-num">01</span><h2 class="sec-title">About</h2></div>
+      <div class="about-grid">
+        <div class="reveal">
+          <p>I'm a passionate and curious developer building my foundation in computer science — one project at a time. What drives me is the moment an idea becomes something that actually works: a route that finds itself, a query that answers a question, an interface someone enjoys using.</p>
+          <p>I work mostly in C++, Python and SQL, with a growing interest in web development, AI, and data analytics. I value integrity, clear communication, and getting a little better every single day. Right now I'm focused on real-world projects and internships where I can learn from people who build great things.</p>
+        </div>
+        <aside class="panel reveal">
+          <div class="grp">
+            <h4>Based in</h4>
+            <div class="v">Lahore, Pakistan</div>
+          </div>
+          <div class="grp">
+            <h4>Currently learning</h4>
+            <div class="v">React.js · REST APIs · Data Analytics</div>
+            <div class="chips"><span class="chip">freeCodeCamp</span><span class="chip">Coursera</span><span class="chip">Kaggle</span></div>
+          </div>
+          <div class="grp">
+            <h4>Interests</h4>
+            <div class="chips"><span class="chip">AI / ML</span><span class="chip">Web Dev</span><span class="chip">Data Analytics</span><span class="chip">UI / UX</span></div>
+          </div>
+          <div class="grp">
+            <h4>Languages</h4>
+            <div class="v">English · Urdu</div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="sec-num">02</span><h2 class="sec-title">Skills &amp; Tools</h2></div>
+      <div class="skills-grid reveal">
+        <div class="skill-cell">
+          <span class="idx">/ 01</span>
+          <h3>Languages</h3>
+          <div class="skill-list"><span>C++</span><span>Python</span><span>JavaScript</span><span>SQL</span></div>
+        </div>
+        <div class="skill-cell">
+          <span class="idx">/ 02</span>
+          <h3>Web</h3>
+          <div class="skill-list"><span>HTML</span><span>CSS</span><span>React.js</span><span>REST APIs</span><span>WordPress</span></div>
+        </div>
+        <div class="skill-cell">
+          <span class="idx">/ 03</span>
+          <h3>CS Foundations</h3>
+          <div class="skill-list"><span>Data Structures &amp; Algorithms</span><span>OOP</span><span>DBMS</span><span>Problem Solving</span><span>Debugging</span></div>
+        </div>
+        <div class="skill-cell">
+          <span class="idx">/ 04</span>
+          <h3>Data &amp; Tooling</h3>
+          <div class="skill-list"><span>Pandas</span><span>Matplotlib</span><span>Excel</span><span>Git &amp; GitHub</span><span>Figma</span></div>
+        </div>
+      </div>
+      <div class="soft reveal">
+        <span class="lbl">Also</span>
+        <span class="s">Teamwork</span><span class="s">Adaptability</span><span class="s">Quick learning</span><span class="s">Communication</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="sec-num">03</span><h2 class="sec-title">Selected Work</h2></div>
+      <div class="work-list reveal">
+        <div class="work-item">
+          <span class="w-num">01</span>
+          <div>
+            <div class="w-title">Smart Campus Navigator</div>
+            <div class="w-desc">A campus navigation tool that computes the shortest route between buildings using Dijkstra's algorithm, with DFS/BFS traversal for exploring alternative paths and a simple graph visualization.</div>
+            <div class="w-tags"><span>C++</span><span>Dijkstra</span><span>Graphs</span><span>DFS / BFS</span></div>
+          </div>
+          <span class="w-go">↗</span>
+        </div>
+        <div class="work-item">
+          <span class="w-num">02</span>
+          <div>
+            <div class="w-title">Music Playlist Manager</div>
+            <div class="w-desc">A console music player built on singly and doubly linked lists — add, delete, search and play tracks while moving forward and backward through the playlist.</div>
+            <div class="w-tags"><span>C++</span><span>Linked Lists</span><span>DSA</span></div>
+          </div>
+          <span class="w-go">↗</span>
+        </div>
+        <div class="work-item">
+          <span class="w-num">03</span>
+          <div>
+            <div class="w-title">Content Platform Database</div>
+            <div class="w-desc">Database design for an AI-driven content recommendation system: a normalized ERD, related tables and SQL queries powering personalized feeds.</div>
+            <div class="w-tags"><span>MySQL</span><span>ERD</span><span>SQL</span><span>DBMS</span></div>
+          </div>
+          <span class="w-go">↗</span>
+        </div>
+        <div class="work-item">
+          <span class="w-num">04</span>
+          <div>
+            <div class="w-title">Folder Tree Traversal</div>
+            <div class="w-desc">A file-system explorer that walks folder hierarchies with DFS and BFS, plus expression trees constructed from postfix notation.</div>
+            <div class="w-tags"><span>C++</span><span>Trees</span><span>DFS / BFS</span></div>
+          </div>
+          <span class="w-go">↗</span>
+        </div>
+        <div class="work-item">
+          <span class="w-num">05</span>
+          <div>
+            <div class="w-title">Data Analytics Study</div>
+            <div class="w-desc">Exploratory analysis on Kaggle datasets — cleaning messy data, handling missing values and visualizing trends with Pandas and Matplotlib.</div>
+            <div class="w-tags"><span>Python</span><span>Pandas</span><span>Matplotlib</span></div>
+          </div>
+          <span class="w-go">↗</span>
+        </div>
+        <div class="work-item">
+          <span class="w-num">06</span>
+          <div>
+            <div class="w-title">This Portfolio</div>
+            <div class="w-desc">A responsive personal site designed and built from scratch to present my work, skills and story.</div>
+            <div class="w-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+          </div>
+          <span class="w-go">↗</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="sec-num">04</span><h2 class="sec-title">Education &amp; Experience</h2></div>
+      <div class="timeline reveal">
+        <div class="t-item exp">
+          <div class="t-date">2024 — Present</div>
+          <div class="t-title">SEO Freelancer</div>
+          <div class="t-place">Independent</div>
+          <div class="t-meta">Optimizing content and improving search visibility for clients, alongside reporting and analytics work.</div>
+        </div>
+        <div class="t-item">
+          <div class="t-date">2023 — 2027</div>
+          <div class="t-title">BSCS (Hons)</div>
+          <div class="t-place">Government College University, Lahore</div>
+          <div class="t-meta">Bachelor of Science in Computer Science — coursework across DSA, OOP, DBMS and programming.</div>
+        </div>
+        <div class="t-item">
+          <div class="t-date">2021 — 2023</div>
+          <div class="t-title">FSc Pre-Medical</div>
+          <div class="t-place">Reader Group of Colleges, Sargodha</div>
+          <span class="t-grade">A+ · 938 marks</span>
+        </div>
+        <div class="t-item">
+          <div class="t-date">2019 — 2021</div>
+          <div class="t-title">Matriculation</div>
+          <div class="t-place">Reader Grammar School, Sargodha</div>
+          <span class="t-grade">A+ · 1094 marks</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="sec-num">05</span><h2 class="sec-title">Contact</h2></div>
+      <h2 class="contact-big reveal">Let's build<br>something <em>good.</em></h2>
+      <p class="contact-sub reveal">I'm open to internships, junior roles and collaborations. The fastest way to reach me is email — I'd love to hear what you're working on.</p>
+      <a href="mailto:iman.iqbal12204@gmail.com" class="mail-link reveal">iman.iqbal12204@gmail.com <span>→</span></a>
+      <div class="contact-socials reveal">
+        <a href="https://github.com/iman-iqbal" target="_blank" rel="noopener">GitHub ↗</a>
+        <a href="https://www.linkedin.com/in/iman-iqbal" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a href="tel:+923079872090">+92 307 9872090</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <p>© <span id="year"></span> Iman Iqbal — Designed &amp; built in Lahore</p>
+    <a href="#top" class="to-top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script>
+  // year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // nav background on scroll
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('solid', window.scrollY > 40);
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  // mobile menu
+  const burger = document.getElementById('burger');
+  const menu = document.getElementById('mobileMenu');
+  const toggleMenu = (force) => {
+    const open = force ?? !menu.classList.contains('open');
+    menu.classList.toggle('open', open);
+    burger.classList.toggle('x', open);
+    document.body.classList.toggle('menu-open', open);
+  };
+  burger.addEventListener('click', () => toggleMenu());
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+
+  // reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // active nav link
+  const sections = ['about','skills','work','education','contact'];
+  const links = {};
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    const id = a.getAttribute('href').slice(1);
+    if(sections.includes(id)) links[id] = a;
+  });
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      const id = e.target.id;
+      if(e.isIntersecting && links[id]){
+        Object.values(links).forEach(l => l.classList.remove('active'));
+        links[id].classList.add('active');
+      }
+    });
+  }, {threshold:0.4});
+  sections.forEach(id => { const s = document.getElementById(id); if(s) spy.observe(s); });
+</script>
+</body>
+</html>
